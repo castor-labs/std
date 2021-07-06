@@ -16,8 +16,8 @@ declare(strict_types=1);
 
 namespace Castor\Arr;
 
-use InvalidArgumentException;
 use Traversable;
+use ValueError;
 
 /**
  * Splits an array into chunks.
@@ -37,7 +37,7 @@ function chunk(array $array, int $size): array
  *
  * Illegal values for keys will be casted to string.
  *
- * @throws InvalidArgumentException if the array lengths aren't equal
+ * @throws ValueError if the array lengths aren't equal
  */
 function combine(array $keys, array $values): array
 {
@@ -46,7 +46,7 @@ function combine(array $keys, array $values): array
         return $result;
     }
 
-    throw new InvalidArgumentException('Array for $keys and $values must be of the same length');
+    throw new ValueError('Castor\Arr\combine(): Argument #1 ($keys) and argument #2 ($values) must have the same number of elements');
 }
 
 /**
@@ -117,10 +117,12 @@ function has(array $array, $element): bool
 
 /**
  * @param array<int,mixed> $array
+ * @param mixed            $key
+ * @psalm-param string|int $key
  */
-function hasIndex(array $array, int $index): bool
+function hasKey(array $array, $key): bool
 {
-    return \array_key_exists($index, $array);
+    return \array_key_exists($key, $array);
 }
 
 /**
@@ -128,16 +130,11 @@ function hasIndex(array $array, int $index): bool
  *
  * @param array<int,mixed> $array
  *
- * @throws InvalidArgumentException if the array is not an indexed array
+ * @return null|int|string
  */
-function lastIndex(array $array): int
+function lastIndex(array $array)
 {
-    $key = \array_key_last($array);
-    if (is_int($key)) {
-        return $key;
-    }
-
-    throw new InvalidArgumentException('The $array must be an indexed array');
+    return \array_key_last($array);
 }
 
 /**

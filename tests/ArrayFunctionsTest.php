@@ -16,8 +16,8 @@ declare(strict_types=1);
 
 namespace Castor;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use ValueError;
 
 /**
  * Class ArrayFunctionsTest.
@@ -47,7 +47,7 @@ class ArrayFunctionsTest extends TestCase
 
     public function testItFailsToCombine(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(ValueError::class);
         Arr\combine(['name'], ['Pete', 'pete@example.com']);
     }
 

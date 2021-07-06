@@ -14,6 +14,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+if (!class_exists('ValueError')) {
+    class ValueError extends Error
+    {
+    }
+}
+
 $paths = [
     __DIR__.'/str.php',
     __DIR__.'/arr.php',
