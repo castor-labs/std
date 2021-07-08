@@ -122,6 +122,10 @@ function length(string $subject): int
  */
 function split(string $subject, string $separator, int $limit = null): array
 {
+    if (null === $limit) {
+        return \explode($separator, $subject);
+    }
+
     return \explode($separator, $subject, $limit);
 }
 
