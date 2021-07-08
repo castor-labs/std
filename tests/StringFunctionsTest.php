@@ -26,6 +26,12 @@ use PHPUnit\Framework\TestCase;
  */
 class StringFunctionsTest extends TestCase
 {
+    public function testLength(): void
+    {
+        self::assertSame(5, Str\len('Hello'));
+        self::assertSame(6, Str\len('世界'));
+    }
+
     public function testItSplits(): void
     {
         $split = Str\split('hello world', ' ');
@@ -40,5 +46,14 @@ class StringFunctionsTest extends TestCase
         self::assertCount(2, $split);
         self::assertSame('hello', $split[0]);
         self::assertSame('world my dear friend', $split[1]);
+    }
+
+    public function testItSplitsWithNegativeLimit(): void
+    {
+        $split = Str\split('hello world my dear friend', ' ', -2);
+        self::assertCount(3, $split);
+        self::assertSame('hello', $split[0]);
+        self::assertSame('world', $split[1]);
+        self::assertSame('my', $split[2]);
     }
 }

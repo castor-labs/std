@@ -112,32 +112,73 @@ function slice(string $subject, int $offset, int $length = null): string
     return $sub;
 }
 
+/**
+ * Returns the length in bytes of a string.
+ *
+ * This function will count the bytes of multibyte strings. If you need to count
+ * the characters of a string, use `Castor\Unicode\Utf8\runeCount`.
+ *
+ * @deprecated To be removed in 1.0.0. Use Str\len instead.
+ */
 function length(string $subject): int
 {
     return \strlen($subject);
 }
 
 /**
- * @return string[]
+ * Returns the length in bytes of a string.
+ *
+ * This function will count the bytes of multibyte strings. If you need to count
+ * the characters of a string, use `Castor\Unicode\Utf8\runeCount`.
  */
-function split(string $subject, string $separator, int $limit = null): array
+function len(string $subject): int
 {
-    if (null === $limit) {
+    return \strlen($subject);
+}
+
+/**
+ * Splits the $subject string in all $separator occurrences.
+ *
+ * An optional $limit argument can be provided to specify the maximum parts to
+ * split.
+ *
+ * If $limit is negative, then all parts are returned except those minus $limit
+ * size.
+ *
+ * If $limit is zero, it means there is no limit. This is the default behaviour.
+ *
+ * @return string[] The split parts
+ */
+function split(string $subject, string $separator, int $limit = 0): array
+{
+    if (0 === $limit) {
         return \explode($separator, $subject);
     }
 
     return \explode($separator, $subject, $limit);
 }
 
-function join(string $separator, string ...$string): string
+/**
+ * Joins a collection of $strings using a $separator.
+ *
+ * @param string ...$strings
+ */
+function join(string $separator, string ...$strings): string
 {
-    return \implode($separator, $string);
+    return \implode($separator, $strings);
 }
 
 /**
+ * Creates a string out of a $template passing some $parts.
+ *
+ * Syntax for the $template placeholders can be found in the PHP sprintf function
+ * documentation.
+ *
+ * @see https://www.php.net/manual/en/function.sprintf.php
+ *
  * @param mixed ...$parts
  */
 function printf(string $template, ...$parts): string
 {
-    return sprintf($template, ...$parts);
+    return \sprintf($template, ...$parts);
 }

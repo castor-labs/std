@@ -14,6 +14,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+// Polyfill for PHP 8
 if (!class_exists('ValueError')) {
     class ValueError extends Error
     {
@@ -23,7 +24,13 @@ if (!class_exists('ValueError')) {
 $paths = [
     __DIR__.'/str.php',
     __DIR__.'/arr.php',
+    __DIR__.'/unicode.utf8.php',
 ];
+
+// Load Utf8 functions if mbstring extension is included.
+if (extension_loaded('mbstring')) {
+    $path[] = __DIR__.'/unicode.utf8.php';
+}
 
 foreach ($paths as $path) {
     require_once $path;
